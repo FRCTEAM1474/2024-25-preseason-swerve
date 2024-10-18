@@ -37,30 +37,10 @@ public class RobotContainer
 
   
 
-  private final climberRightSubsystem rightClimber = new climberRightSubsystem();
-  private final climberLeftSubsystem leftClimber = new climberLeftSubsystem();
-  private final intakeSubsystem intake = new intakeSubsystem();
-  private final shooterSubsystem shooter = new shooterSubsystem();
-  private final armSubsystem arm = new armSubsystem();
-
   //NamedCommands.registerCommand("speaker shoot", new climbingPosCommand(arm));
 
   //private Command genArmPos = new genPosCommand(arm, desiredPos);
-  private final Command climberLeftUp = new climberLeftUpCommand(leftClimber);
-  private final Command climberRightDown = new climberRightDownCommand(rightClimber);
-  private final Command climberLeftDown = new climberLeftDownCommand(leftClimber);
-  private final Command climberRightUp = new climberRightUpCommand(rightClimber);
   
-  private final Command intakeNote = new intakeCommand(intake);
-  private final Command autoIntakeNote = new autoIntakeCommand(intake);
-  private final Command outtakeNote = new outtakeCommand(intake);
-  private final Command unguidedShoot = new unguidedShooterCommand(shooter);
-  private final Command ampShoot = new ampShootCommand(shooter);
-
-  private final Command ampPos = new ampPosCommand(arm);
-  private final Command climbingAndSpeakerPos = new climbingPosCommand(arm);
-  private final Command startingPos = new startingPosCommand(arm);
-  private final Command intakePos = new intakePosCommand(arm);
   //add in speaker shoot
 
   static CommandXboxController driverXbox = new CommandXboxController(0);
@@ -74,15 +54,6 @@ public class RobotContainer
 
   public RobotContainer()
   {
-
-    NamedCommands.registerCommand("climbingAndSpeakerPos", climbingAndSpeakerPos);
-    NamedCommands.registerCommand("startingPos", startingPos);
-    NamedCommands.registerCommand("intakePos", intakePos);
-    NamedCommands.registerCommand("ampPos", ampPos);
-    NamedCommands.registerCommand("intakeNote", intakeNote);
-    NamedCommands.registerCommand("autoIntakeNote" , autoIntakeNote);
-    NamedCommands.registerCommand("unguidedShoot", unguidedShoot);
-    NamedCommands.registerCommand("defaultPos", startingPos);
     
     // Configure the trigger bindings
     configureBindings();
@@ -152,24 +123,8 @@ public class RobotContainer
     //driverXbox.x().whileTrue(new RepeatCommand(new InstantCommand(drivebase::lock, drivebase)));
     //driverXbox.povUp().whileTrue(climberUp);
     //driverXbox.povDown().whileTrue(climberDown);
-    driverXbox.leftBumper().whileTrue(intakeNote);
-    driverXbox.rightBumper().whileTrue(outtakeNote);
-
     //driverXbox.povUp().onTrue((new InstantCommand(drivebase::)))
 
-    operatorXbox.povUp().whileTrue(unguidedShoot);
-    operatorXbox.povDown().whileTrue(ampShoot);
-
-    operatorXbox.leftBumper().whileTrue(climberLeftDown);
-    operatorXbox.leftTrigger().whileTrue(climberLeftUp);
-
-    operatorXbox.leftBumper().whileTrue(climberRightDown);
-    operatorXbox.leftTrigger().whileTrue(climberRightUp);
-
-    operatorXbox.a().onTrue(climbingAndSpeakerPos);
-    operatorXbox.y().onTrue(ampPos);
-    operatorXbox.x().onTrue(startingPos);
-    operatorXbox.b().onTrue(intakePos);
 
     //operatorXbox.a().onTrue(new climbingPosCommand(arm));
     //operatorXbox.b().onTrue(new ampPosCommand(arm));
@@ -207,18 +162,6 @@ public class RobotContainer
    */
   public Command getAutonomousCommand(){
     return autoChooser.getSelected();
-  }
-
-  public Command climberLeftZeroCommand(){
-    return new climberLeftZeroCommand(leftClimber);
-  }
-
-  public Command climberRightZeroCommand() {
-    return new climberRightZeroCommand(rightClimber);
-  }
-
-  public Command shooterInitCommand() {
-    return new shooterInitCommand(shooter);
   }
 
   public void setDriveMode()
